@@ -1,0 +1,10 @@
+host = 'chat.freenode.net'
+port = 6667
+tls = false
+nick = 'bncr-dev'
+username = 'bncr-dev'
+password = ''
+
+[channels.'#developerslv']
+ops = ['daGrevis', 'ij']
+voiced = ['msks', 'zn', 'Xn', 'vdk', 'agni']
