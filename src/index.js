@@ -121,6 +121,8 @@ const onKick = async (payload) => {
   if (irc.user.nick === payload.kicked) {
     console.log(`Kicked by ${payload.nick}, rejoining ${payload.channel}!`)
 
+    isOpAcquired[payload.channel] = false
+
     irc.join(payload.channel)
   }
 }
