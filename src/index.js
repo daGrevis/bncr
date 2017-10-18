@@ -37,15 +37,25 @@ const setUserModes = (channelId, nick, isOpAlready = false, isVoicedAlready = fa
   }
 
   if (!isOpAlready && _.includes(channelConfig.ops, nick)) {
-    console.log(`Setting +o on ${nick} at ${channelId}...`)
+    irc.whois(nick, event => {
+      if (!event.account) {
+        return
+      }
 
-    irc.raw('MODE', channelId, '+o', nick)
+      console.log(`Setting +o on ${nick} at ${channelId}...`)
+      irc.raw('MODE', channelId, '+o', nick)
+    })
   }
 
   if (!isVoicedAlready && _.includes(channelConfig.voiced, nick)) {
-    console.log(`Setting +v on ${nick} at ${channelId}...`)
+    irc.whois(nick, event => {
+      if (!event.account) {
+        return
+      }
 
-    irc.raw('MODE', channelId, '+v', nick)
+      console.log(`Setting +v on ${nick} at ${channelId}...`)
+      irc.raw('MODE', channelId, '+v', nick)
+    })
   }
 }
 
