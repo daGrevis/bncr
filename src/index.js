@@ -48,14 +48,8 @@ const setUserModes = (channelId, nick, isOpAlready = false, isVoicedAlready = fa
   }
 
   if (!isVoicedAlready && _.includes(channelConfig.voiced, nick)) {
-    irc.whois(nick, event => {
-      if (!event.account) {
-        return
-      }
-
-      console.log(`Setting +v on ${nick} at ${channelId}...`)
-      irc.raw('MODE', channelId, '+v', nick)
-    })
+    console.log(`Setting +v on ${nick} at ${channelId}...`)
+    irc.raw('MODE', channelId, '+v', nick)
   }
 }
 
