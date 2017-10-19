@@ -9,3 +9,6 @@ password = ''
 ops = ['daGrevis', 'ij']
 voiced = ['msks', 'zn', 'Xn', 'vdk', 'agni']
 accounts = [['ij', 'sie']]
+restrictedPatterns = [
+  '^!voteban'
+]

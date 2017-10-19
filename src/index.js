@@ -127,6 +127,27 @@ const onKick = async (payload) => {
   }
 }
 
+const onMessage = async (payload) => {
+  const channelId = payload.target
+
+  if (!isOpAcquired[channelId]) {
+    return
+  }
+
+  const channelConfig = config.channels[channelId]
+
+  if (!channelConfig) {
+    return
+  }
+
+  _.forEach(channelConfig.restrictedPatterns, pattern => {
+    const regExp = new RegExp(pattern)
+    if (regExp.test(payload.message)) {
+      irc.raw('KICK', channelId, payload.nick)
+    }
+  })
+}
+
 const eventMap = {
   close: onClose,
   connecting: onConnecting,
@@ -136,6 +157,7 @@ const eventMap = {
   mode: onMode,
   userlist: onUserList,
   kick: onKick,
+  privmsg: onMessage,
 }
 
 const eventQueue = new Queue(1, Infinity)
