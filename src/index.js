@@ -38,7 +38,13 @@ const setUserModes = (channelId, nick, isOpAlready = false, isVoicedAlready = fa
 
   if (!isOpAlready && _.includes(channelConfig.ops, nick)) {
     irc.whois(nick, event => {
-      if (!event.account) {
+      const foundAccount = _.find(
+        channelConfig.accounts,
+        ([accountNick]) => accountNick === nick,
+      )
+      const account = foundAccount ? foundAccount[1] : nick
+
+      if (event.account !== account) {
         return
       }
 
