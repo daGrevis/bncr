@@ -140,12 +140,18 @@ const onMessage = async (payload) => {
     return
   }
 
-  _.forEach(channelConfig.restrictedPatterns, pattern => {
+  if (_.includes(channelConfig.kickIgnores, payload.nick)) {
+    return
+  }
+
+  for (const pattern of channelConfig.kickPatterns) {
     const regExp = new RegExp(pattern)
     if (regExp.test(payload.message)) {
+      console.log(`Kicking ${payload.nick} from ${channelId}...`)
       irc.raw('KICK', channelId, payload.nick)
+      break
     }
-  })
+  }
 }
 
 const eventMap = {

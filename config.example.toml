@@ -9,6 +9,9 @@ password = ''
 ops = ['daGrevis', 'ij']
 voiced = ['msks', 'zn', 'Xn', 'vdk', 'agni']
 accounts = [['ij', 'sie']]
-restrictedPatterns = [
-  '^!voteban'
+kickPatterns = [
+  '^!voteban',
+  '^!echo',
+  '^\){3,}',
 ]
+kickIgnores = ['msks', 'zn', 'Xn', 'vdk', 'agni']
