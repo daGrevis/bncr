@@ -13,5 +13,6 @@ kickPatterns = [
   '^!voteban',
   '^!echo',
   '^\){3,}',
+  'pagrab'
 ]
 kickIgnores = ['msks', 'zn', 'Xn', 'vdk', 'agni']
