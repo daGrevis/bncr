@@ -11,7 +11,15 @@ const CONFIG_PATH = './config.toml'
 
 Queue.configure(Promise)
 
-const getConfig = () => toml.parse(fs.readFileSync(CONFIG_PATH))
+const getConfig = () => {
+  const output = fs.readFileSync(CONFIG_PATH)
+  try {
+    return toml.parse(output)
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
+}
 
 let config = getConfig()
 
@@ -21,9 +29,7 @@ if (config.watchConfig) {
     try {
       config = getConfig()
       console.log('Config reloaded!')
-    } catch (e) {
-      console.log(e)
-    }
+    } catch (e) {}
   })
 }
 
