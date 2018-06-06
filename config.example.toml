@@ -21,6 +21,9 @@ voiced = [
 accounts = [
   ["ij", "sie"],
 ]
+kickOnJoin = [
+  "zandis",
+]
 kickIgnores = [
   "msks",
   "zn",

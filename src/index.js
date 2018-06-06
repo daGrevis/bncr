@@ -82,6 +82,11 @@ const setUserModes = (channelId, nick, isOpAlready = false, isVoicedAlready = fa
   }
 }
 
+const kick = (channelId, nick) => {
+  console.log(`Kicking ${nick} from ${channelId}...`)
+  irc.raw('KICK', channelId, nick)
+}
+
 const onClose = async (err) => {
   console.log('Connection to IRC server was closed!')
 }
@@ -106,6 +111,11 @@ const onJoin = async (payload) => {
 
     irc.raw('MODE', payload.channel, '+o', irc.user.nick)
   } else {
+    if (_.includes(config.channels[payload.channel].kickOnJoin, payload.nick)) {
+      kick(payload.channel, payload.nick)
+      return
+    }
+
     setUserModes(payload.channel, payload.nick)
   }
 }
@@ -174,8 +184,7 @@ const onMessage = async (payload) => {
   for (const pattern of kickPatterns) {
     const regExp = new RegExp(pattern)
     if (regExp.test(payload.message)) {
-      console.log(`Kicking ${payload.nick} from ${channelId}...`)
-      irc.raw('KICK', channelId, payload.nick)
+      kick(channelId, payload.nick)
       break
     }
   }
