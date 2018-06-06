@@ -2,13 +2,30 @@ global.Promise = require('bluebird')
 const fs = require('fs')
 
 const _ = require('lodash')
+const chokidar = require('chokidar')
 const toml = require('toml')
 const ircFramework = require('irc-framework')
 const Queue = require('promise-queue')
 
+const CONFIG_PATH = './config.toml'
+
 Queue.configure(Promise)
 
-const config = toml.parse(fs.readFileSync('./config.toml'))
+const getConfig = () => toml.parse(fs.readFileSync(CONFIG_PATH))
+
+let config = getConfig()
+
+if (config.watchConfig) {
+  console.log('Watching config...')
+  chokidar.watch(CONFIG_PATH).on('change', () => {
+    try {
+      config = getConfig()
+      console.log('Config reloaded!')
+    } catch (e) {
+      console.log(e)
+    }
+  })
+}
 
 const irc = new ircFramework.Client({
   host: config.host,

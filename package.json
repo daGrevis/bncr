@@ -4,6 +4,7 @@
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.5.1",
+    "chokidar": "^2.0.3",
     "irc-framework": "^2.9.1",
     "lodash": "^4.17.4",
     "promise-queue": "^2.2.3",

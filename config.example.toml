@@ -4,6 +4,7 @@ tls = false
 nick = 'bncr-dev'
 username = 'bncr-dev'
 password = ''
+watchConfig = true
 
 [channels.'#developerslv']
 ops = ['daGrevis', 'ij']
