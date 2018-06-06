@@ -6,13 +6,34 @@ username = 'bncr-dev'
 password = ''
 watchConfig = true
 
-[channels.'#developerslv']
-ops = ['daGrevis', 'ij']
-voiced = ['msks', 'zn', 'Xn', 'vdk', 'agni']
-accounts = [['ij', 'sie']]
-kickPatterns = [
-  '^!voteban',
-  '^!echo',
-  '^\){3,}',
+[channels."#meeseekeria2"]
+ops = [
+  "daGrevis",
+  "ij",
 ]
-kickIgnores = ['msks', 'zn', 'Xn', 'vdk', 'agni']
+voiced = [
+  "msks",
+  "zn",
+  "Xn",
+  "vdk",
+  "agni",
+]
+accounts = [
+  ["ij", "sie"],
+]
+kickIgnores = [
+  "msks",
+  "zn",
+  "Xn",
+  "vdk",
+  "agni",
+]
+[channels."#meeseekeria2".kickPatterns]
+"*" = [
+  "^!voteban",
+  "^!echo",
+  "^\\){3,}",
+]
+dianshi = [
+  "pietiek",
+]

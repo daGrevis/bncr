@@ -167,7 +167,11 @@ const onMessage = async (payload) => {
     return
   }
 
-  for (const pattern of channelConfig.kickPatterns) {
+  const kickPatterns = _.concat(
+    channelConfig.kickPatterns['*'] || [],
+    channelConfig.kickPatterns[payload.nick] || [],
+  )
+  for (const pattern of kickPatterns) {
     const regExp = new RegExp(pattern)
     if (regExp.test(payload.message)) {
       console.log(`Kicking ${payload.nick} from ${channelId}...`)
