@@ -97,9 +97,9 @@ const setUserModes = (channelId, nick, isOpAlready = false, isVoicedAlready = fa
   }
 }
 
-const kick = (channelId, nick) => {
-  console.log(`Kicking ${nick} from ${channelId}...`)
-  irc.raw('KICK', channelId, nick)
+const kick = (channelId, nick, reason = '') => {
+  console.log(`Kicking ${nick} from ${channelId}, reason: "${reason}"...`)
+  irc.raw('KICK', channelId, nick, reason)
 }
 
 const onClose = async (err) => {
@@ -196,10 +196,19 @@ const onMessage = async (payload) => {
     channelConfig.kickPatterns['*'] || [],
     channelConfig.kickPatterns[payload.nick] || [],
   )
-  for (const pattern of kickPatterns) {
-    const regExp = new RegExp(pattern)
-    if (regExp.test(payload.message)) {
-      kick(channelId, payload.nick)
+  for (const kickPattern of kickPatterns) {
+    let pattern
+    let reason
+    if (_.isArray(kickPattern)) {
+      pattern = kickPattern[0]
+      reason = kickPattern[1] !== undefined ? kickPattern[1] : `/${pattern}/`
+    } else {
+      pattern = kickPattern
+      reason = `/${pattern}/`
+    }
+
+    if ((new RegExp(pattern)).test(payload.message)) {
+      kick(channelId, payload.nick, reason)
       break
     }
   }

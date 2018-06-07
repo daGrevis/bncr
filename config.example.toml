@@ -1,9 +1,9 @@
-host = 'chat.freenode.net'
+host = "chat.freenode.net"
 port = 6667
 tls = false
-nick = 'bncr-dev'
-username = 'bncr-dev'
-password = ''
+nick = "bncr-dev"
+username = "bncr-dev"
+password = ""
 
 # Everything below is optional.
 
@@ -42,8 +42,11 @@ kickIgnores = [
 "*" = [
   "^!voteban",
   "^!echo",
+]
+acid3 = [
   "^\\){3,}",
 ]
 dianshi = [
-  "pietiek",
+  ["666", "devils number!"],
+  ["p..t..k"],
 ]
