@@ -4,19 +4,24 @@ tls = false
 nick = 'bncr-dev'
 username = 'bncr-dev'
 password = ''
+
+# Everything below is optional.
+
 watchConfig = true
 
-[channels."#meeseekeria2"]
+[channels."#developerslv"]
 ops = [
   "daGrevis",
   "ij",
 ]
 voiced = [
+  "bncr",
   "msks",
   "zn",
   "Xn",
   "vdk",
   "agni",
+  "snbt",
 ]
 accounts = [
   ["ij", "sie"],
@@ -25,13 +30,15 @@ kickOnJoin = [
   "zandis",
 ]
 kickIgnores = [
+  "bncr",
   "msks",
   "zn",
   "Xn",
   "vdk",
   "agni",
+  "snbt",
 ]
-[channels."#meeseekeria2".kickPatterns]
+[channels."#developerslv".kickPatterns]
 "*" = [
   "^!voteban",
   "^!echo",

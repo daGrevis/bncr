@@ -13,11 +13,26 @@ Queue.configure(Promise)
 
 const getConfig = () => {
   const output = fs.readFileSync(CONFIG_PATH)
+
+  let nextConfig
   try {
-    return toml.parse(output)
+    nextConfig = toml.parse(output)
   } catch (e) {
     console.log(e)
     throw e
+  }
+
+  return {
+    watchConfig: true,
+    ...nextConfig,
+    channels: _.mapValues(nextConfig.channels || [], channel => ({
+      ops: channel.ops || [],
+      voiced: channel.voiced || [],
+      accounts: channel.accounts || [],
+      kickOnJoin: channel.kickOnJoin || [],
+      kickIgnores: channel.kickIgnores || [],
+      kickPatterns: channel.kickPatterns || {},
+    })),
   }
 }
 
