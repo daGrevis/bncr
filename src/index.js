@@ -25,7 +25,7 @@ let config = getConfig()
 
 if (config.watchConfig) {
   console.log('Watching config...')
-  chokidar.watch(CONFIG_PATH).on('change', () => {
+  chokidar.watch(CONFIG_PATH, { awaitWriteFinish: true }).on('change', () => {
     try {
       config = getConfig()
       console.log('Config reloaded!')
