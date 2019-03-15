@@ -131,7 +131,9 @@ const onJoin = async (payload) => {
       return
     }
 
-    setUserModes(payload.channel, payload.nick)
+    const isOpAlready = _.includes(payload.modes, 'o')
+    const isVoicedAlready = _.includes(payload.modes, 'v')
+    setUserModes(payload.channel, payload.nick, isOpAlready, isVoicedAlready)
   }
 }
 
