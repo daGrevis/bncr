@@ -3,12 +3,12 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.1",
-    "chokidar": "^2.0.3",
-    "irc-framework": "^2.9.1",
-    "lodash": "^4.17.4",
-    "promise-queue": "^2.2.3",
-    "toml": "^2.3.3"
+    "bluebird": "^3.7.2",
+    "chokidar": "^3.3.1",
+    "irc-framework": "^4.8.1",
+    "lodash": "^4.17.15",
+    "promise-queue": "^2.2.5",
+    "toml": "^3.0.0"
   },
   "scripts": {
     "start": "node src/index.js"
