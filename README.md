@@ -1,6 +1,18 @@
 # bncr
 
-IRC bot that manages +o & +v flags, and kicks when message matches regexp
+IRC bot that automates some of OP chores
+
+* Give **+v** to users from whitelist (see `voiced`)
+
+* Give **+o** to users from whitelist with registered account (see `ops`)
+
+* Kicks user from blacklist on join (see `kickOnJoin`)
+
+* Kicks user on message that matches regexp (see `kickPatterns`, `kickIgnores`)
+
+* Auto-rejoins channel when kicked by someone
+
+* Auto-reloads config when `config.toml` is changed
 
 ## Usage
 
