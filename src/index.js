@@ -29,6 +29,7 @@ const getConfig = () => {
       ops: channel.ops || [],
       voiced: channel.voiced || [],
       accounts: channel.accounts || [],
+      banAccountOnSpamJoin: channel.banAccountOnSpamJoin,
       kickOnJoin: channel.kickOnJoin || [],
       kickIgnores: channel.kickIgnores || [],
       kickPatterns: channel.kickPatterns || {},
@@ -98,7 +99,7 @@ const setUserModes = (channelId, nick, isOpAlready = false, isVoicedAlready = fa
 }
 
 const kick = (channelId, nick, reason = '') => {
-  console.log(`Kicking ${nick} from ${channelId}, reason: "${reason}"...`)
+  console.log(`Kicking ${nick} from ${channelId}${reason ? `, reason: "${reason}"...` : ''}`)
   irc.raw('KICK', channelId, nick, reason)
 }
 
@@ -120,18 +121,70 @@ const onRegistered = async () => {
   })
 }
 
+let joins = []
+
+const banAccountOnSpamJoin = (channelConfig, { channel, nick, account }) => {
+  if (!channelConfig.banAccountOnSpamJoin) {
+    return
+  }
+
+  const { intervalSeconds, maxJoins } = channelConfig.banAccountOnSpamJoin
+
+  if (!account) {
+    return
+  }
+
+  if (_.includes(channelConfig.ops, nick)) {
+    return
+  }
+
+  const now = new Date()
+
+  joins = _.reject(joins, join =>
+    (now - join.timestamp) > intervalSeconds * 1000
+  )
+
+  joins.push({
+    account,
+    timestamp: now,
+  })
+
+  const accountJoins = _.filter(joins, { account })
+
+  if (accountJoins.length > maxJoins) {
+    const target = `$a:${account}`
+    console.log(`Setting +b on ${target} at ${channel}...`)
+    irc.raw('MODE', channel, '+b', target)
+    kick(channel, nick)
+
+    joins = _.reject(joins, { account })
+  }
+}
+
 const onJoin = async (payload) => {
+  const channelConfig = config.channels[payload.channel]
+
+  if (!channelConfig) {
+    return
+  }
+
   if (payload.nick === irc.user.nick) {
     console.log(`Joined ${payload.channel}!`)
 
     irc.raw('MODE', payload.channel, '+o', irc.user.nick)
   } else {
-    if (_.includes(config.channels[payload.channel].kickOnJoin, payload.nick)) {
+    if (_.includes(channelConfig.kickOnJoin, payload.nick)) {
       kick(payload.channel, payload.nick)
       return
     }
 
     setUserModes(payload.channel, payload.nick)
+
+    banAccountOnSpamJoin(channelConfig, {
+      channel: payload.channel,
+      nick: payload.nick,
+      account: payload.account,
+    })
   }
 }
 

@@ -26,6 +26,7 @@ voiced = [
 accounts = [
   ["ij", "sie"],
 ]
+banAccountOnSpamJoin = { intervalSeconds = 60, maxJoins = 5 }
 kickOnJoin = [
   "zandis",
 ]

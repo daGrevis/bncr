@@ -10,6 +10,8 @@ IRC bot that automates some of OP chores
 
 * Kicks user on message that matches regexp (see `kickPatterns`, `kickIgnores`)
 
+* Bans account when it's joining too frequently (see `banAccountOnSpamJoin`)
+
 * Auto-rejoins channel when kicked by someone
 
 * Auto-reloads config when `config.toml` is changed
