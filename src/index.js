@@ -105,6 +105,8 @@ const kick = (channelId, nick, reason = '') => {
 
 const onClose = async (err) => {
   console.log('Connection to IRC server was closed!')
+
+  process.exit(1)
 }
 
 const onConnecting = async () => {
